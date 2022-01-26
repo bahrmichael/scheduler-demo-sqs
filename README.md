@@ -16,8 +16,6 @@ You will also need to [sign in at the Point In Time Scheduler Dashboard](https:/
 2. Run `yarn deploy` or `npm run deploy` to deploy the demo app to your AWS account
 3. When the deployment finishes, go to the [AWS CloudFormation service](https://console.aws.amazon.com/cloudformation), identify the stack, and copy the Queue URL. You will need this later.
 
-![Queue URL](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/terminal.png)
-
 ## 2. Register the Application
 
 [Sign in at the Point In Time Scheduler Dashboard](https://app.point-in-time-scheduler.com) and register your first application.
