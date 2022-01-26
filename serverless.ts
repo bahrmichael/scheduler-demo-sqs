@@ -63,7 +63,7 @@ const serverlessConfiguration: AWS = {
               Effect:"Allow",
               Resource: {'Fn::GetAtt': ['ReceiveQueue', 'Arn']},
               Principal: {
-                AWS: ["999658689398", "710154449298"]
+                AWS: ["710154449298"]
               }
             }]
           }

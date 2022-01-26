@@ -1,6 +1,6 @@
 # Scheduler Demo SQS
 
-This repository is a demo of how one can use the [Point In Time Scheduler](https://point-in-time-scheduler.com) with a REST application.
+This repository is a demo of how one can use the [Point In Time Scheduler](https://point-in-time-scheduler.com) with an Amazon SQS queue.
 
 ## Prerequisites
 
@@ -14,9 +14,9 @@ You will also need to [sign in at the Point In Time Scheduler Dashboard](https:/
 
 1. Run `yarn` or `npm install` to install the required dependencies
 2. Run `yarn deploy` or `npm run deploy` to deploy the demo app to your AWS account
-3. When the deployment finishes you will see an API key and a URL for the receiveMessage endpoint. You will need those later.
+3. When the deployment finishes, go to the [AWS CloudFormation service](https://console.aws.amazon.com/cloudformation), identify the stack, and copy the Queue URL. You will need this later.
 
-![Terminal after deployment](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/terminal.png)
+![Queue URL](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/terminal.png)
 
 ## 2. Register the Application
 
@@ -24,22 +24,18 @@ You will also need to [sign in at the Point In Time Scheduler Dashboard](https:/
 
 ![register your first application](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/register-1.png)
 
-In the first step choose the integration type REST. Then click on next.
+In the first step choose the integration type Amazon SQS. Then click on next.
 
-![choose the integration type REST](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/register-2.png)
+![choose the integration type SQS](https://github.com/bahrmichael/scheduler-demo-sqs/blob/main/docs/img/register-2.png)
 
-In the next step enter the URL of the endpoint for receiving messages. You can find it on the terminal where you deployed the application.
-If you forgot to keep it, you can run `yarn deploy` again to have it printed again.
+In the next step enter the URL of the queue for receiving messages. You can find it in the CloudFormation stack of your deployed application.
 
-![enter the URL of the endpoint](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/register-3.png)
+![enter the URL of the queue](https://github.com/bahrmichael/scheduler-demo-sqs/blob/main/docs/img/register-3.png)
 
-In the following step you specify the authentication. The demo app is configured to create an API key that is visible on the terminal
-after deployment.
+In the following step you see the required resource policy. You must attach this to your queue so that the scheduler
+has permission to send messages to your queue.
 
-The demo app requires this api key to be passed with the header `x-api-key`, so change the header name as shown below. Then
-enter the api key as the header value.
-
-![specify the authentication](https://github.com/bahrmichael/scheduler-demo-rest/blob/main/docs/img/register-4.png)
+![specify the authentication](https://github.com/bahrmichael/scheduler-demo-sqs/blob/main/docs/img/register-4.png)
 
 Give your app a name and description, something like "Demo App" is enough to later remember what this was for. The
 description is optional.
@@ -57,7 +53,7 @@ You can provide the id and key via environment variables. Assuming you have the 
 
 Wait for the deployment to complete, then open your AWS Console and navigate to CloudWatch Metrics.
 
-After a few minutes, a new namespace called "SchedulerDemo" will appear. You should see more messages being sent than received initially.
+After a few minutes, a new namespace called "SchedulerDemoSQS" will appear. You should see more messages being sent than received initially.
 The demo schedules them for a random point in time over the next 30 minutes.
 
 You can modify the number of messages per minute with the environment variable `MESSAGES_PER_MINUTE`. Example: `MESSAGES_PER_MINUTE=10 APP_ID=123 API_KEY=S3crEt yarn deploy`
